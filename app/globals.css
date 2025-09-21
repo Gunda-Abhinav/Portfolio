@@ -1,26 +1,64 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+html {
+  --line-color: #e5e7eb;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html.dark {
+  --line-color: rgba(255, 255, 255, 0.2);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.borderBlack {
+  @apply border border-black/10;
+}
+@keyframes move-stars {
+  from { background-position: 0 0; }
+  to { background-position: -10000px 5000px; }
+}
+
+@keyframes twinkling {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+@keyframes shoot-star {
+  0% {
+    opacity: 0;
+    transform: translateX(0) translateY(0) scaleX(0.6) scaleY(1);
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(400px) translateY(-250px) scaleX(1.2) scaleY(0.8);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.animate-shoot-star {
+  animation: shoot-star 3s ease-in-out infinite;
+  filter: blur(1px);
+}
+
+
+.stars {
+  width: 100%;
+  height: 100%;
+  background: url("/stars.png") repeat;
+  animation: move-stars 200s linear infinite;
+  position: absolute;
+  z-index: 0;
+  opacity: 0.75;
+}
+
+.twinkling {
+  width: 100%;
+  height: 100%;
+  background: url("/twinkling.png") repeat;
+  animation: twinkling 5s ease-in-out infinite;
+  position: absolute;
+  z-index: 1;
+  opacity: 0.3;
 }
